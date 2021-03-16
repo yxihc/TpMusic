@@ -1,0 +1,4 @@
+include ':musiclib'
+include ':myapplicationtest'
+include ':app'
+rootProject.name = "TpMusic"
