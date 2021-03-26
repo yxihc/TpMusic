@@ -1,3 +1,5 @@
+include ':player'
+include ':music'
 include ':musiclib'
 include ':myapplicationtest'
 include ':app'
