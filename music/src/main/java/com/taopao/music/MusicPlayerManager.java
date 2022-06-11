@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
+import com.danikula.videocache.HttpProxyCacheServer;
+import com.taopao.music.cache.CacheFileNameGenerator;
 import com.taopao.music.listener.BindServiceCallBack;
 
+import java.io.File;
 import java.util.WeakHashMap;
 
 /**
@@ -17,8 +20,6 @@ import java.util.WeakHashMap;
  * @Description: java类作用描述
  */
 public class MusicPlayerManager {
-
-
     //   ----------------------------- 单例 -----------------------------
     private MusicPlayerManager() {
     }
@@ -50,8 +51,8 @@ public class MusicPlayerManager {
         this.mContext = context;
     }
 
-    private ServiceToken bind(Context context, BindServiceCallBack callBack) {
-        mToken = bindToService(mContext, new ServiceConnection() {
+    public ServiceToken bind(Context context, BindServiceCallBack callBack) {
+        mToken = bindToService(context, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 mBinder = (MusicServiceBinder) iBinder;
@@ -72,8 +73,8 @@ public class MusicPlayerManager {
     }
 
 
-    public final ServiceToken bindToService(final Context context,
-                                            final ServiceConnection callback) {
+    private final ServiceToken bindToService(final Context context,
+                                             final ServiceConnection callback) {
 //        Activity realActivity = ((Activity) context).getParent();
 //        if (realActivity == null) {
 //            realActivity = (Activity) context;
@@ -110,7 +111,6 @@ public class MusicPlayerManager {
     }
 
 
-
     public final class ServiceBinder implements ServiceConnection {
         private final ServiceConnection mCallback;
         private final Context mContext;
@@ -145,4 +145,38 @@ public class MusicPlayerManager {
         }
     }
 
+
+    public void play(String id) {
+        mBinder.play(id);
+    }
+
+
+//    、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
+    /**
+     * AndroidVideoCache缓存设置
+     */
+    private HttpProxyCacheServer proxy;
+    private String musicFilelCacheDir = null;
+    private boolean mHasCache;
+
+    public boolean isHasCache() {
+        return mHasCache;
+    }
+
+    public void setHasCache(boolean mHasCache) {
+        this.mHasCache = mHasCache;
+    }
+
+    public static HttpProxyCacheServer getProxy() {
+        return MusicPlayerManager.getInstance().proxy == null ? (MusicPlayerManager.getInstance().proxy = MusicPlayerManager.getInstance().newProxy()) : MusicPlayerManager.getInstance().proxy;
+    }
+
+    private HttpProxyCacheServer newProxy() {
+        return new HttpProxyCacheServer.Builder(mContext)
+                .cacheDirectory(new File(musicFilelCacheDir))
+                .fileNameGenerator(new CacheFileNameGenerator())
+                .build();
+    }
 }
+
+

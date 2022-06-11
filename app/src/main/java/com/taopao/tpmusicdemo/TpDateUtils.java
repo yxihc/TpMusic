@@ -127,13 +127,19 @@ public class TpDateUtils {
                         "yyyy-MM-dd");
             }
 
-            Date nowDate = sdf.parse(nowDateString);
-            Calendar nowCalendar = Calendar.getInstance();
-            nowCalendar.setTime(nowDate);
+            System.out.print("====:"+nowDateString+"\n");
 
-            int nowYear = nowCalendar.get(Calendar.YEAR);  //当前年份
-            int nowMonth = nowCalendar.get(Calendar.MONTH) + 1;  //当前月份
-            int nowDay = nowCalendar.get(Calendar.DAY_OF_MONTH); //当前日期
+//            Date nowDate = sdf.parse(nowDateString);
+//            Calendar nowCalendar = Calendar.getInstance();
+//            nowCalendar.setTime(nowDate);
+
+
+
+            String[] splitStr = nowDateString.split("-");
+            int nowYear = Integer.parseInt(splitStr[0]);
+            int nowMonth = Integer.parseInt(splitStr[1]);
+            int nowDay = Integer.parseInt(splitStr[2]);
+
 
 
             String age = "";

@@ -16,10 +16,10 @@ public class Test {
 
     public static void main(String args[]) {
 
-        System.out.print("年龄："+TpDateUtils.getAge("2019-8-30"));
-        System.out.print("\n年"+TpDateUtils.getAge2Year("2019-8-30"));
-        System.out.print("\n月"+TpDateUtils.getAge2Monh("2019-8-30"));
-        System.out.print("\n日"+TpDateUtils.getAge2Day("2019-8-30"));
+        System.out.print("年龄："+TpDateUtils.getAge("2021-03-13"));
+        System.out.print("\n年"+TpDateUtils.getAge2Year("2021-03-13"));
+        System.out.print("\n月"+TpDateUtils.getAge2Monh("2021-03-13"));
+        System.out.print("\n日"+TpDateUtils.getAge2Day("2021-03-13"));
 
     }
 
